@@ -142,3 +142,13 @@ p {
 .main p {
     font-size: 20px;
 }
+
+
+
+/* RESULTS
+---------------------------------*/
+
+.results {
+    min-width: 70%;
+    color: red;
+}
