@@ -13,7 +13,14 @@
 
 <body>
 
-    <p>This is the swag!!!</p>
+    <?php
+    echo 'yolo!<br>';
+    $count = 0;
+    while($count < 5){
+        echo 'yolo! while '.$count. '<br>';
+        $count = $count + 1;
+    }
+    ?>
 
 </body>
 
