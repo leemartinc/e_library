@@ -3,8 +3,8 @@
 
 <form action="#" method="POST">
     <div class="form__field center-x">
-        <input class="search" id="search" type="text" style="color:white;" name="search" class="form__input" placeholder="What book are you looking for?" required>
-        <input class="submittt" name="submit" type="submit" value="Search">
+        <input class="search" id="search" type="text" style="color:white;margin-right:8px;" name="search" class="form__input" placeholder="What book are you looking for?" required>
+        <input class="submittt" name="submit" type="submit" value="Search" style="position:absolute;">
     </div>
 </form>
 
