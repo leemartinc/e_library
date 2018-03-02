@@ -1,5 +1,37 @@
 /* config.css */
 
+.fl-lt {
+    float: left;
+}
+
+.fl-rt {
+    float: right;
+}
+
+
+.center {
+    text-align: center;
+}
+
+.center-x {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.center-y {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.midcontainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
 /* helpers/align.css */
 
 .align {
