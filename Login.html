@@ -1,0 +1,55 @@
+<html>
+
+<head>
+    <title>Login Page</title>
+
+
+</head>
+<form id='login' method='post' action="login.php" accept-charset='UTF-8'>
+    <h1 align="center">Login</h1>
+    <br />
+    <br />
+    <input type='hidden' name='submitted' id='submitted' value='1' />
+
+    <label for='username' align="center">Username:</label>
+    <input type='text' name='username' id='username' maxlength="50" />
+    <br />
+    <br />
+    <label for='password' align="center">Password:</label>
+    <input type='password' name='password' id='password' maxlength="50" />
+    <br />
+    <br />
+    <input type='submit' name='Submit' value='Submit' />
+
+</form>
+
+</html>
+<?php
+function Login()
+{
+    if(empty($_POST['username']))
+    {
+        $this->HandleError("Enter a valid username!");
+        return false;
+    }
+    
+    if(empty($_POST['password']))
+    {
+        $this-> HandleError("Enter a valid password!");
+        return false;
+    }
+    
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
+    
+    if(!$this->CheckLoginInDB($username,$password))
+    {
+        return false;
+    }
+    
+    session_start();
+    
+    
+    return true;
+}
+?>
