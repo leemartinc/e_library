@@ -94,7 +94,7 @@
 
 
                 <div class="form__field">
-                    <input type="submit" value="Add Book">
+                    <input type="submit" name='submit' value="Add Book">
                 </div>
 
             </form>
@@ -106,7 +106,32 @@
 
     </div>
 
-
+    <?php
+        
+    include 'connect.php';
+    
+    if(isset($_POST['submit'])){
+        
+        $title = $_POST['title'];
+        $author = $_POST['author'];
+        $description = $_POST['description'];
+        
+        $insrt="INSERT INTO 'books'('bookid', 'title','author', 'description'') VALUES ('676','$title','$author','$description');";
+        
+        if(mysqli_query($conn, $insrt)){
+             while($row = mysqli_fetch_assoc($result))
+                    {
+                        $_SESSION['title1']    = $row['title'];
+                        $_SESSION['author1']  = $row['author'];
+                        $_SESSION['desc1'] = $row['description'];
+                    }
+            
+        }
+        
+        
+    }
+    
+    ?>
 
 </body>
 
