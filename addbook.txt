@@ -94,6 +94,11 @@
         text-decoration: none;
     }
 
+    a:focus,
+    a:hover {
+        text-decoration: underline;
+    }
+
     /* modules/form.css */
 
     input {
@@ -176,7 +181,6 @@
         padding: 16px;
         padding: 1rem;
         font: inherit;
-        margin: 0;
     }
 
     .login input[type='password'],
@@ -237,13 +241,50 @@
 
 <div class="align">
 
+
+    <p>Add book picture</p>
+    <input type="file" id="files" name="picture" />
+    <output id="list"></output>
+    <div id="preview"><img id="blah" src="http://placehold.it/180" alt="your image" /></div>
+
+    <script>
+        function handleFileSelect(evt) {
+            var files = evt.target.files; // FileList object
+
+            // Loop through the FileList and render image files as thumbnails.
+            for (var i = 0, f; f = files[i]; i++) {
+
+                // Only process image files.
+                if (!f.type.match('image.*')) {
+                    continue;
+                }
+
+                var reader = new FileReader();
+
+                // Closure to capture the file information.
+                reader.onload = (function(theFile) {
+                    return function(e) {
+                        // Render thumbnail.
+                        var span = document.getElementById('preview');
+                        span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                            '" title="', escape(theFile.name), '"/>'
+                        ].join('');
+                        document.getElementById('list').insertBefore(span, null);
+                    };
+                })(f);
+
+                // Read in the image file as a data URL.
+                reader.readAsDataURL(f);
+            }
+        }
+
+        document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+    </script>
+
     <div class="grid">
 
         <form action="#" method="POST" class="form login">
-
-            <div class="form__field">
-                <input type="text" name="pic" class="form__input" placeholder="URL of book Cover" required>
-            </div>
 
             <div class="form__field">
                 <input type="text" name="title" class="form__input" placeholder="Title" required>
@@ -259,7 +300,8 @@
             </div>
 
             <div class="form__field">
-                <input type="text" name="book" class="form__input" placeholder="URL of book PDF" required>
+                <p>Upload the book</p><br>
+                <input type="file" name="userfile" id="userfile" class="form__input text--center" required>
             </div>
 
 
@@ -272,46 +314,57 @@
         </form>
 
 
-    </div>
-
-    <svg xmlns="http://www.w3.org/2000/svg" class="icons"><symbol id="arrow-right" viewBox="0 0 1792 1792"><path d="M1600 960q0 54-37 91l-651 651q-39 37-91 37-51 0-90-37l-75-75q-38-38-38-91t38-91l293-293H245q-52 0-84.5-37.5T128 1024V896q0-53 32.5-90.5T245 768h704L656 474q-38-36-38-90t38-90l75-75q38-38 90-38 53 0 91 38l651 651q37 35 37 90z"/></symbol><symbol id="lock" viewBox="0 0 1792 1792"><path d="M640 768h512V576q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28H416q-40 0-68-28t-28-68V864q0-40 28-68t68-28h32V576q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z"/></symbol><symbol id="user" viewBox="0 0 1792 1792"><path d="M1600 1405q0 120-73 189.5t-194 69.5H459q-121 0-194-69.5T192 1405q0-53 3.5-103.5t14-109T236 1084t43-97.5 62-81 85.5-53.5T538 832q9 0 42 21.5t74.5 48 108 48T896 971t133.5-21.5 108-48 74.5-48 42-21.5q61 0 111.5 20t85.5 53.5 62 81 43 97.5 26.5 108.5 14 109 3.5 103.5zm-320-893q0 159-112.5 271.5T896 896 624.5 783.5 512 512t112.5-271.5T896 128t271.5 112.5T1280 512z"/></symbol></svg>
-
-</div>
-
-
-</body>
-
-</html>
-
-
 <?php
+        
     include 'connect.php';
     
     if(isset($_POST['submit'])){
         
-        $pic = $_POST['pic'];
+      /*  $pic = 'book-pics/';
+        
         $title = $_POST['title'];
         $author = $_POST['author'];
         $description = $_POST['description'];
-        $book_loc = $_POST['book'];
+        $book_loc = 'books/';*/
         
      
-   
+   /* $tempFile = $_FILES['downloads']['tmp_name'];          //3             
+      
+    $targetPath = $book_loc; //4
+     
+    $targetFile =  $targetPath . $_FILES['downloads']['name'];  //5
+ 
+    $result = move_uploaded_file($tempFile,$targetFile); //6
+        
+         if($result) {
+        
         //insert to file DB
-        $insrt = "INSERT INTO books (title, author, description, `picture-location`, `book-location`) VALUES ('". $title ."', '". $author ."', '". $description ."', '". $pic ."','". $book_loc ."')";
-
-                $result = mysqli_query($conn, $insrt);
+        $insrt="INSERT INTO 'books'('title','author', 'description','picture-location','book-location') VALUES ('". $title ."','". $author ."','". $description ."','". $pic ."','". $book_loc ."')";
+                $result = mysqli_query($conn, $sql);
                  
                 if(!$result)
                 {
                     //something went wrong, display the error
-                    echo 'An error occured while inserting your file to DB. Please try again later. error2'. mysqli_error($conn);
-                }else{
+                    echo 'An error occured while inserting your file to DB. Please try again later. error2' . mysqli_error($conn);
+                }
         //end intert
         
-        echo "<script type='text/javascript'>alert('The book ".  $title = $_POST['title'] ." has been uploaded. OK will go home');window.location = 'home.php';</script>";
-         }
-           /*$uploaddir = 'books/';
+        echo "<script type='text/javascript'>alert('The file " .  basename( $_FILES['downloads']['name']). " has been uploaded. OK will go home');window.location = 'home.php';</script>";
+             
+             header( 'Location: home.php');
+    }else{echo 'An error occured while inserting your file' . mysqli_error($conn);
+          echo '<br>';
+         if(ini_get('file_uploads') == 1)
+{
+  echo 'HTTP Upload Enabled';
+}
+else
+{
+  echo 'HTTP Upload Disabled';
+}
+         } */
+         
+           $uploaddir = 'books/';
                 print_r($uploadfile = $uploaddir . basename($_FILES['userfile']['name']));
 
                   if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
@@ -323,8 +376,20 @@
                   echo 'Here is some more debugging info:';
                     print_r($_FILES);
                     echo "\n";
-                    print_r($_POST['userfile']);*/
+                    print_r($_POST['userfile']);
         
             }
     
     ?>
+
+
+    </div>
+
+    <svg xmlns="http://www.w3.org/2000/svg" class="icons"><symbol id="arrow-right" viewBox="0 0 1792 1792"><path d="M1600 960q0 54-37 91l-651 651q-39 37-91 37-51 0-90-37l-75-75q-38-38-38-91t38-91l293-293H245q-52 0-84.5-37.5T128 1024V896q0-53 32.5-90.5T245 768h704L656 474q-38-36-38-90t38-90l75-75q38-38 90-38 53 0 91 38l651 651q37 35 37 90z"/></symbol><symbol id="lock" viewBox="0 0 1792 1792"><path d="M640 768h512V576q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28H416q-40 0-68-28t-28-68V864q0-40 28-68t68-28h32V576q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z"/></symbol><symbol id="user" viewBox="0 0 1792 1792"><path d="M1600 1405q0 120-73 189.5t-194 69.5H459q-121 0-194-69.5T192 1405q0-53 3.5-103.5t14-109T236 1084t43-97.5 62-81 85.5-53.5T538 832q9 0 42 21.5t74.5 48 108 48T896 971t133.5-21.5 108-48 74.5-48 42-21.5q61 0 111.5 20t85.5 53.5 62 81 43 97.5 26.5 108.5 14 109 3.5 103.5zm-320-893q0 159-112.5 271.5T896 896 624.5 783.5 512 512t112.5-271.5T896 128t271.5 112.5T1280 512z"/></symbol></svg>
+
+</div>
+
+
+    </body>
+
+    </html>

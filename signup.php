@@ -12,9 +12,9 @@
 
 </head>
 
-<body>
+<body style="background-color: #2c3338;">
 
-    <body class="align">
+    <body class="align" style="background-color: #2c3338;">
 
         <div class="grid">
 
@@ -75,10 +75,13 @@ if(isset($_POST['submit'])) {
                      
                     //we also put the user_id and user_name values in the $_SESSION, so we can use it at various pages
                     while($row = mysqli_fetch_assoc($result))
+                        
                     {
+                        $_SESSION['signed_in'] = true;
                         $_SESSION['user_id']    = $row['userid'];
                         $_SESSION['user_name']  = $row['name'];
                         $_SESSION['user_level'] = $row['user_lvl'];
+                        $_SESSION['username']=$red['username'];
                     }
     
                     header('Location: home.php');

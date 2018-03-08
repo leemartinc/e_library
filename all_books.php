@@ -1,33 +1,17 @@
 <?php include 'header.php'; ?>
 
-
-<form action="#" method="POST">
-    <div class="form__field center-x" style="white-space: nowrap;">
-        <input class="search" id="search" type="text" style="color:white;margin-right:8px;" name="search" class="form__input" placeholder="What book are you looking for?" required>
-        <input class="submittt" name="submit" type="submit" value="Search">
-    </div>
-</form>
-
 <div class="center-x">
     <div style="width:100%; margin-top: 80px;">
         <?php
 include 'connect.php';  
         
-        $keyword = $_POST['search']; 
         
         //find match
-            $sql='Select * from books where (title LIKE "%'. $keyword .'%") or (author LIKE "%'. $keyword .'%");';
+            $sql='Select * from books;';
         
             //run query
             $result = mysqli_query($conn, $sql);
         
-if(isset($_POST['submit'])) {
- 
-            
-        
-            
-            
-    
             if(mysqli_num_rows($result) == 0)
                 {
                     echo 'No such book exists';
@@ -73,7 +57,7 @@ if(isset($_POST['submit'])) {
             <?php }
     
         
-}       
+     
         
 while($row = mysqli_fetch_assoc($result))
                         {      
@@ -95,6 +79,7 @@ readfile($file_url); // do the double-download-dance (dirty but worky)
 }
 }
 ?>
+
 
 
     </div>

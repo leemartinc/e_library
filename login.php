@@ -12,13 +12,13 @@
 
 </head>
 
-<body>
+<body style="background-color: #2c3338;">
 
-    <body class="align">
+    <body class="align" style="background-color: #2c3338;">
 
         <div class="grid">
 
-            <form action="https://httpbin.org/post" method="POST" class="form login">
+            <form action="#" method="POST" class="form login">
 
                 <div class="form__field">
                     <label for="login__username"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg><span class="hidden">Username</span></label>
@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="form__field">
-                    <input type="submit" value="Sign In">
+                    <input type="submit" name="submit" value="Sign In">
                 </div>
 
             </form>
@@ -50,3 +50,77 @@
 </body>
 
 </html>
+
+<?php
+session_start();
+
+include 'connect.php';
+
+//if($_SESSION['signed_in'] == true){ header( 'Location: home.php' ); }
+
+if(isset($_POST['submit'])){
+
+    /*
+    if(empty($_POST['username']))
+    {
+        $this->HandleError("Enter a valid username!");
+        return false;
+    }
+    
+    if(empty($_POST['password']))
+    {
+        $this-> HandleError("Enter a valid password!");
+        return false;
+    }
+    */
+    
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+     //find match
+            $sql = 'SELECT * FROM users WHERE username = "'. $username .'"';
+        
+            //run query
+            $result = mysqli_query($conn, $sql);
+    
+    if(mysqli_num_rows($result) == 0)
+    {
+        echo 'user does not exist';
+    }else{
+        
+        while($row = mysqli_fetch_assoc($result))
+        {
+            
+        
+            
+            if($row['password'] != $password){
+                //echo $row['password'];
+                echo 'wrong password';
+            }else{
+                $sql = 'SELECT * FROM users WHERE username = "'. $username .'"';
+        
+            //run query
+            $result = mysqli_query($conn, $sql);
+                
+                //set the $_SESSION['signed_in'] variable to TRUE
+                    $_SESSION['signed_in'] = true;
+                     
+                    //we also put the user_id and user_name values in the $_SESSION, so we can use it at various pages
+                    while($red = mysqli_fetch_assoc($result))
+                    {
+                        $_SESSION['user_id']=$red['userid'];
+                        $_SESSION['user_name']=$red['name'];
+                        $_SESSION['user_level']=$red['user_lvl'];
+                        $_SESSION['username']=$red['username'];
+                    }
+    
+    
+                    header( 'Location: home.php' );
+                
+                
+            }
+        }
+    }
+    
+}
+?>
