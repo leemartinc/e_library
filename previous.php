@@ -48,7 +48,7 @@ include 'connect.php';
                         while($row = mysqli_fetch_assoc($result))
                         {               
                             echo '<tr>
-                    <td style="width:150px;height:170px;" rowspan="4"><img src=http://placehold.it/180" style="width:150px;height:170px;" /></td>
+                    <td style="width:150px;height:170px;" rowspan="4"><img src="'. $row['picture-location'] .'" style="width:150px;height:170px;" /></td>
                     <td>  Title: '. $row['title'] .'</td>
                 </tr>
                 <tr>

@@ -2,7 +2,7 @@
 include 'connect.php';
 
 
-$sql = 'select * from users where username="'. $_SESSION[username] .'"';
+$sql = 'select * from users where username="'. $_SESSION['username'] .'"';
 
  $result = mysqli_query($conn, $sql);
 
@@ -12,7 +12,7 @@ $sql = 'select * from users where username="'. $_SESSION[username] .'"';
 <div class="midcontainer">
     <table>
         <caption>
-            <?php echo $_SESSION['user_name'] ?>'s account</caption>
+            <?php echo $_SESSION['user_name']; ?>'s account</caption>
         <tr>
             <td>Username:</td>
             <td>
@@ -30,7 +30,7 @@ $sql = 'select * from users where username="'. $_SESSION[username] .'"';
             </td>
         </tr>
         <tr>
-            <td colspan="2">your favourite book is...</td>
+            <!--<td colspan="2">your favourite book is...</td>-->
         </tr>
 
     </table>

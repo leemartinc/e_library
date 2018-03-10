@@ -46,7 +46,7 @@ include 'connect.php';
                 <tr>
 
                     <td style="text-align:center;" height="70px">
-                        <form action="download_book.php?id=<?php echo $b_id; ?>" method="POST"><input class="submittt" style="<?php if($_SESSION['signed_in'] == true){ ?> display:inline-block; <?php }else{ ?>display: none;<?php } ?>" type="submit" name="bookid_<?php echo $b_id; ?>" value="DOWNLOAD" /></form>
+                        <form action="del.php?id=<?php echo $b_id; ?>" method="POST"><input class="submittt" style="<?php if($_SESSION['signed_in'] == true){ ?> display:inline-block; <?php }else{ ?>display: none;<?php } ?>" type="submit" name="bookid_<?php echo $b_id; ?>" value="DELETE" /></form>
                         <p style="<?php if($_SESSION['signed_in'] == true){ ?> display:none; <?php }else{ ?>display: block;<?php } ?>">Must be signed in to download</p>
                     </td>
 

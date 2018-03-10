@@ -28,6 +28,7 @@
                         <li><a href="previous.php">Previous<br>Dowloads</a></li>
                         <li><a href="all_books.php">All Books</a></li>
                         <li style="<?php if($_SESSION['user_level'] == 2){ ?> display:block; <?php }else{ ?>display: none;<?php } ?>"><a style="<?php if($_SESSION['user_level'] == 2){ ?> display:block; <?php }else{ ?>display: none;<?php } ?>" href="addbook.php">Add book</a></li>
+                        <li style="<?php if($_SESSION['user_level'] == 2){ ?> display:block; <?php }else{ ?>display: none;<?php } ?>"><a style="<?php if($_SESSION['user_level'] == 2){ ?> display:block; <?php }else{ ?>display: none;<?php } ?>" href="remove.php">Delete book</a></li>
                         <?php
                     }else{
                     ?>
